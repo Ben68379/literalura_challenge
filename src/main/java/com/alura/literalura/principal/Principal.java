@@ -1,26 +1,28 @@
 package com.alura.literalura.principal;
 
+import com.alura.literalura.LiteraluraApplication;
+
 import java.util.Scanner;
 
 public class Principal {
-private   Scanner teclado = new Scanner(System.in);
 
-    public void menu(){
-        var opcion = 1;
-        while (opcion != 0) {
+    private Scanner teclado = new Scanner(System.in);
+
+    public void menu() {
+        var option = -1;
+        while (option != 0 ) {
             System.out.println("""
-                    1.-Buscar Libro
-                    2.-Listar Libros Registrados
-                    3.-Listar Atores Registrados
-                    4.-Listar Autores vivos en determinados años
-                    5.-Listar libros por idioma
-                    6.-salir
+                    Menu
+                    1
+                    2
+                    3
+                    4
+                    5
+                    6
+
                     """);
-
-            opcion = teclado.nextInt();
-            teclado.nextLine();
-
-            switch (opcion){
+            option = teclado.nextInt();
+            switch (option){
                 case 1:
                     buscarLibroPorTitulo();
                     break;
@@ -37,19 +39,18 @@ private   Scanner teclado = new Scanner(System.in);
                     listarLibrosPorIdioma();
                     break;
                 case 6:
-                    opcion = 0;
-                    System.out.println("Saliendo...");
+                    System.out.println("Saliendo..");
+                    option = 0;
                     break;
+
                 default:
-                    System.out.println("Opcion invalida");
+                    System.out.println("Ingresa una opcion valida");
                     break;
+
             }
+
         }
     }
-
-
-
-
 
     public void buscarLibroPorTitulo(){
         String titulo;
@@ -66,8 +67,4 @@ private   Scanner teclado = new Scanner(System.in);
     }
     private void listarLibrosPorIdioma() {
     }
-
-
-
-
 }
