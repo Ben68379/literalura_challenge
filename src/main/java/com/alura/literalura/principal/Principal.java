@@ -1,12 +1,19 @@
 package com.alura.literalura.principal;
 
-import com.alura.literalura.LiteraluraApplication;
+import com.alura.literalura.model.Titulo;
+import com.alura.literalura.model.TituloDatos;
+import com.alura.literalura.repository.TitulosRepository;
+import com.alura.literalura.service.ConsumoAPI;
+import com.alura.literalura.service.ConvierteDatos;
 
 import java.util.Scanner;
 
 public class Principal {
-
+    private final String URL_BASE = "https://gutendex.com/books?search=";
+    private ConsumoAPI consumoApi = new ConsumoAPI();
+    private ConvierteDatos conversor = new ConvierteDatos();
     private Scanner teclado = new Scanner(System.in);
+    private TitulosRepository repository;
 
     public void menu() {
         var option = -1;
@@ -53,9 +60,12 @@ public class Principal {
     }
 
     public void buscarLibroPorTitulo(){
-        String titulo;
-        System.out.println("Ingresa el Nombre del Libro");
-        titulo = teclado.nextLine();
+        TituloDatos datos = getTitulosDatos();
+        Titulo libro = new Titulo(datos);
+        repository.save(libro);
+        //datosSeries.add(datos);
+        System.out.println(datos);
+
     }
 
     private void listarLibrosRegistrados() {
@@ -66,5 +76,14 @@ public class Principal {
     private void listarAutoresDeIgualEpoca() {
     }
     private void listarLibrosPorIdioma() {
+    }
+    private TituloDatos getTitulosDatos() {
+
+        System.out.println("Escribe el nombre del libro que deseas buscar");
+        var nombreLibro = teclado.nextLine();
+        var json = consumoApi.obtenerDatos(URL_BASE + nombreLibro.replace(" ", "+"));
+        System.out.println(json);
+        TituloDatos datos = conversor.obtenerDatos(json, TituloDatos.class);
+        return datos;
     }
 }
